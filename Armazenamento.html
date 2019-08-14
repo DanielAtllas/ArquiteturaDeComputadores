@@ -1,0 +1,105 @@
+<html lang="pt-br">
+    <head>
+        <title>Armazenamento</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre armazenamento em Estrutura de Dados.">
+    </head>
+    <body>
+        <h1>Armazenamento - Estrutura de Dados</h1>
+        <ul>
+            <li><strong>Andamento básico de uma arquitetura de dados</strong></li>
+                <p>Até que um computador entenda e execute as instruções dada por um determinado programa, o mesmo passa por uma série de etapas, para que esses dados seja trabalhados em seu interno e gerem algum resultado, sendo preciso passar pelos seguintes passos:</p>
+                <ol>
+                    <strong><li>Linguagem de Programação</li></strong>
+                    <br>
+                    <strong><li>Assembly</li></strong>
+                    <br>
+                    <strong><li>Código de máquina ----- Sistemas Operacionais</li></strong>
+                    <br>
+                    <strong><li>Hardware</li></strong>
+                </ol>
+                <p>Sendo então, de forma simplificada, dado um comando/instrução em uma <strong>Linguagem de auto-nível</strong>, gerando um segundo script com o mesmo conteúdo, sendo esta etapa chamada de <strong>Linguagem de baixo-nível</strong>. Logo, esse script é trabalhado e sendo gerido pelo <strong>código/linguagem de máquina</strong>, onde juntamente com os <strong>Sistemas Operacionais</strong>, serão por fim, lidos e trabalhados pelos <strong>Hardwares</strong>.</p>
+            <hr>
+            <li><strong>Armazenamento (Registradores e Caches)</strong></li>
+                <p>Estes, são os componentes de armazenamento encontrados em um <strong>processador</strong>, ocorrendo uma migração de dados/instruções entre a <strong>memória</strong> e o componente, dessa forma, ao se dado um comando em alguma linguagem, os dados a serem trabalhados, serão regidos por esta migração.</p>
+                <ul>
+                    <li><strong>Memória - Cache</strong></li>
+                        <p>A migração entre a Mmeória - Cache, irá gerar um movimento de dados controlas pelo <strong>Hardware</strong>.</p>
+                    <br>
+                    <li><strong>Memória - Registrador</strong></li>
+                        <p>Já a migração entre Memória - Registrador, se dá a movimentos de dados controlados por <strong>Programas</strong>.</p>
+                </ul>
+                <p> É bom saber também, que os computadores usados nestas operações, podem ser de 2 tipos, <strong>Rize</strong> ou <strong>Sisc</strong></p>
+                <ul>
+                    <li><strong>Computadores RISC</strong></li>
+                        <p>Possuem um conjunto de <strong>instruções simples</strong>, onde o seu número de registradores é <strong>reduzido</strong>.</p>
+                    <li><strong>Computadores SISC</strong></li>
+                        <p>Possuem um conjunto de <strong>instruções complexas</strong>, onde o seu número de registradores é <strong>aumentado</strong>.</p>
+                </ul>
+            <hr>
+            <li><strong>Registradores</strong></li>
+                <p>Cada CPU atual inclui registradores para vários propósitos, desde armazenar instruções sendo executadas ao armazenamento/manipulação de dados, até propósitos genéricos. Ou seja, podem ser de <strong>propósito especígico ou geral</strong>. Além disso, esses registradore costumam <strong>rodar na mesma velocidade que o resto da CPU</strong>, pois praticamente toda <strong>operação desempenhada pela CPU, envolve os registradores</strong>. Além disso, o número de registradores é dependente do design de cada CPU, pois não há como alterr sua quantia.</p>
+                <ul>
+                    <li><strong>Registradores de uso Geral</strong></li>
+                        <p>São manipulados diretamente por <strong>instruções</strong>.</p>
+                    <li><strong>Registradores de uso específico</strong></li>
+                        <p>Armazena informações de <strong>controle do processador e do S.O.</strong></p>
+                </ul>
+            <li><strong>Memória CACHE</strong></li>
+                <p> Possui o objetivo de atuar como um <strong>buffer entre os registradores</strong>, sendo eles <strong>limitados</strong> e de <strong>alta velocidade</strong> se comparado a memória RAM. A memórua cahce é configurada de forma a sempre que os dados forem acessados pela memória RAM, o hardware de sistema primeiro verifica se os dados desejados estão no cache, sendo assim recuperados de maneira rápida e usados pela CPU.</p>
+                <p>Em termos de capacidade e armazenamento, o cache é menor que a RAM, sendo necssário dividir o cache em seções que podem ser usadas para armazenar áreasa diferentes de memória RAM.</p>
+                <ul>
+                    <li><strong>Níveis de CACHE</strong></li>
+                        <p>Os caches atualmente podem ser <strong>multi-níveis</strong>, podendo existir <strong>mais de um conjunto de cahces</strong> entre a CPU e a memória principal, onde em sua maioria, possuem 2 níveis:</p>
+                        <ol>
+                            <strong><li>Cache L1</li></strong>
+                                <p>Frequentemente localixado diretamente no chip da CPU e rodam na mesma velocidade que a CPU.</p>
+                            <strong><li>Cache L2</li></strong>
+                                <p>Frequentemente, é parte do módulo da CPU, rodando na mesma velocidade da CPU, porém, menor e mais lento que o cache L1.</p>
+                        </ol>
+                </ul>
+                <p>Portanto, o objetivo de todos os sub-sistemas de cache, é <strong>reduzir o tempo médio de acesso à memória RAM</strong>,</p>
+            <hr>
+            <p>Além disso, tem-se também, a <strong>memória RAM</strong> e os <strong>discos rígidos</strong>, onde a memória RAM, ou memória principal, representa o armazenamento eletrônico em massa nos computadores, sendo usada para armazenar dados e programas nquanto estão em uso. Sua operação básica é simples, onde em seu nível mais baixo possui <strong>Chips</strong> (circuitos integrados que executam a "memorização", tendo 4 níveis de conexões:</p>
+            <ol>
+                <strong><li>Eletricidade</li></strong>
+                    <p>Operam circuitos dentro do Chip;</p>
+                <strong><li>Dados</li></strong>
+                    <p>Tranferem o I/O (entrada e saída) de dados;</p>
+                <strong><li>Leitura/Gravação</li></strong>
+                    <p>Controle de recuperação/armazenamento de dados;</p>
+                <strong><li>Endereço</li></strong>
+                    <p>Onde os dados devem ser lidos/gravados dentro do Chip.</p>
+            </ol>
+            <ul>
+                <li><strong>Armazenamento de dados na RAM</strong></li>
+                    <ol>
+                        <li>Os dados são apresentados às <strong>conexões de dados</strong>;</li>
+                        <br>
+                        <li>O endereço no qual o dado deve ser armazenado é apresentado às <strong>conexões de endereço</strong>;</li>
+                        <br>
+                        <li>A conexão leitura/gravação está ajustada no modo <strong>Write</strong> (gravação).</li>
+                    </ol>
+                <li><strong>Recuperação de dados na RAM</strong></li>
+                    <ol>
+                        <li>Os dados são apresentados às <strong>conexões de endereço</strong>;</li>
+                        <br>
+                        <li>A conexão leitura/gravação está ajustada no modo <strong>Read</strong> (leitura).</li>
+                        <br>
+                        <li>Os dados são acessados pelas <strong>conexões de dados</strong>.</li>
+                    </ol>
+            </ul>
+            <br>
+            <strong>OBS: Todas essas operações ocorrem de maneira rápida (em nanosegundos), assim como todas as tecnologias abordadas até aqui, são de <strong>Natureza Volátil</strong> (Peridas quando a energia é desligada)</strong>
+            <hr>
+            <p>Já os <strong>discos rígidos</strong>, são <strong>não voláteis</strong>, os quais são permanentes mesmo após a queda de energia, estão ocupando uma especial posição na arquitetura , tornando-os ideais para <strong>armazenamentos de longo prazo</strong>. Porém, saiba que <strong>não é poss´vel executar programas diretamente quando estão no disco rígido</strong>, precisando ser acessados primeiramente pela memória RAM.</p>
+            <p>Além disso, por ser de natureza eletromecânica, possui uma lentidão de armazenamento e recuperação de dados quando coparado com os demais, possuindo então 4 diferentes fases para suas operações, sendo:</p>
+            <ol>
+                <li>Movimento do braço mecânico;</li>
+                <li>Rotação do disco;</li>
+                <li>Heads acessando/gravando dados;</li>
+                <li>Transferência de dados para os eletrônicos de drive.</li>
+            </ol>
+        </ul>
+        
+    </body>
