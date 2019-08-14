@@ -1,0 +1,140 @@
+<html lang="pt-br">
+    <head>
+        <title>Desempenho</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre desempenho de dados em Arquitetura de Computadores.">
+    </head>
+    <body>
+        <h1>Desempenho - Arquitetura de Computadires</h1>
+        <p>É importante entender que <strong>Desemprenho não é apenas velocidade da CPU</strong>, sendo um pouco mais complexo que isso, assim como o conhecimento de que dados e instruções são encontrados na <strong>memória</strong>, onde para se executar uma instrução, esta deve ser migrada para a CPU (1 por vez), em seguida, os dados onde esta instrução opera, também devem ser levados à CPU.</p>
+        <p>Essa migração dos dados entre memória e CPU gera uma carga de desempenho, em outras palavras, essa transmissão pode limitar o desempenho a ser gerado. Porém, esse grau de desempenho pode ser alterado/melhorado, com os seguintes meios:</p>
+        <ol>
+            <li>Aumentando a taxa de transmissão (Utilização de uma melhor/mais avançada memória, como a troca de DDR3 para DDR4;</li>
+            <li>Instruções mais compactas, gerando uma menor migração de dados.</li>
+        </ol>
+        <p>Essa migração de dados, ocorre mais ou menos da seguinte forma:</p>
+        <pre>
+       <strong>Memória</strong>                 <strong>CPU</strong>
+    |----------|          |------------|
+<strong>X</strong>   |     <i>?</i>    |  ----->  |     <i>X</i>      |     <strong>T0</strong>           
+    |----------|          |------------|
+<strong>Y</strong>   |     <i>?</i>    |  ----->  |     <i>Y</i>      |     <strong>T1</strong>       
+    |----------|          |------------|
+<strong>Z</strong>   |     <i>?</i>    |  ----->  |     <i>Z</i>      |     <strong>T2</strong>     
+    |----------|          |------------|
+        </pre>
+        <p>Onde este é o escopo de migração dos dados da memória para a CPU, onde em um comando, foi dada a criação de uma variável <strong>Z, X e Y</strong> (com valores indefinidos). Logo, o computador entende-se que essas variáveis devem ser armazenadas nos registradores, ou seja, tornando o seguinte <strong>$T0 = X, $T1 = Y e $T2 = Z</strong>, ou seja, o registrador T0 recebe o valor X, o regisrador T2 recebe o valor Y e o registrador T2 recebe o valor de Z.<p>
+        <p>Agora, imagine que foi dado um comando de soma, com o desejo de somar os valores das variáveis X e Y. Para isso, o registrador deverá alocar o valor do resultado da soma em um dos registradores (uma vez que a quantidade de registradores é imutável), gerando o seguinte:</p>
+        <pre>
+    $T2 = ($T0 + $T1)
+    
+       <strong>Memória</strong>                 <strong>CPU</strong>
+    |----------|          |------------|
+<strong>X</strong>   |     <i>?</i>    |  ----->  |     <i>X</i>      |     <strong>T0</strong>           
+    |----------|          |------------|
+<strong>Y</strong>   |     <i>?</i>    |  ----->  |     <i>Y</i>      |     <strong>T1</strong>       
+    |----------|          |------------|
+<strong>Z</strong>   |     <i>?</i>    |  ----->  |     <i>X+Y</i>    |     <strong>T2</strong>     
+    |----------|          |------------|
+        
+        </pre>
+        <hr>
+        <ul>
+            <li><strong>Memória, Dados (informações digitais) e Endereços</strong></li>
+                <p>Entenda que a memória principal, é como um vetor de células, acessadas por um endereço (índice), onde cada endereço possui uma capacidade constante de bits (todos possuem uma mesma capacidade), sendo o tamanho da memória igual a 2 elevado a capacidade de bits. Por exemplo:</p>
+                <pre>
+            3 bits por célula, logo: <strong>2^3 = 8</strong>, ou seja, o tamanho da memória (Quantidade de endereços) possui um tamanho de 8 Bits.
+                </pre>
+            <p>OBS: O 1ª endereço sempre terá todos os bits iguais a <strong>0</strong> e o último endereço, terá seus bits iguais a <strong>1</strong></p>
+            <p>Esses endereços, nada mais são a representação de identificação das variáveis que serão trabalhadas (como ponteiros).</p>
+            <ul>
+                <li><strong>Organização da memória orientada a Bytes</strong></li>
+                    <p>Cada programa ou instrução de programa, fazem referência aos endereços das variáveis, seguindo o mesmo conceito de vetores de bytes, onde cada variável possui uma alocação de endereço na memória.</p>
+            </ul>
+            <li><strong>Palavra de Computador</strong></li>
+                <p>As palavras de compuatador, sendo a unidade natural de informação usada por cada tipo de computador em particular. É uma sequência de bits de tamanho fixo que é processado em conjunto numa máquina, sendo que cada palavra de computador varia de tamanho de PC para PC, ou seja, palavras de PC nada mais são do que <strong>instruções de um computador</strong>.</p>
+                <p>Uma palavra portanto, possui 4 endereços (4gb) para computadores de 32x e 16 endereços para computadores de 86x. a referência feita de um processador a uma palavra, é referênciada pelo <strong>primeiro endereço</strong> da palavra, mesmo ela tendo 4. Por exemplo:</p>
+                <pre>
+                LW $t0, 0($gp)
+                LW $t1, 4($gp)
+                
+                ou seja, sendo feita a leitura de 2 palavras, onde:
+                
+                LW = Comando
+                
+                $t0/$t1 = Registradores
+                
+                0/4 = Endereços referênciados das palavras X e Y
+                
+                $gp = Apontador para o endereço
+                </pre>
+                <p>Portanto, os endereços especificam <strong>Bytes na memória</strong>, sendo estes endereços locais na memória</p>
+            <li><strong>Bytes</strong></li>
+                <p>Dentro de uma palavra, podem conter inúmeros bytes, sendo estes agrupados de 2 a 2. Por exemplo:</p>
+                <pre>
+            0x01234567 = Palavra de Computador
+            
+            Logo, se agruparmos de 2 a 2, temos um conjunto de 4 bytes:
+            
+            01 - 23 - 45 - 67
+                </pre>
+                <p>Essa ordem de bytes podem respeitas 2 extremidades, sendo elas <strong>Big-endian</strong> ou <strong>Little-endian</strong>, as quais se diferem apenas pela ordem em que será lido os bytes, como no seguinte:</p>
+                <pre>
+            0x01234567 = Palavra
+            
+            <strong>*Big-Endian</strong>
+                |01| -> 0100
+                ----
+                |23| -> 0101
+                ----
+                |45| -> 0102
+                ----
+                |67| -> 0103
+                
+                Logo, em big-endian, é respeitado uma ordem da esquerda pra direita.
+                
+            
+            <strong>*Little-Endian</strong>
+                |67| -> 0100
+                ----
+                |45| -> 0101
+                ----
+                |23| -> 0102
+                ----
+                |01| -> 0103
+                
+                Logo, em little-endian, é respeitado uma ordem da direita pra esquerda.
+                
+
+                
+                onde:
+                
+                I - 01/23/45/67 = <strong>Bytes da Palavra</strong>
+                
+                II - 0100/0101/0102/0103 = <strong>Endereços da Palavra</strong>
+                
+                III - 0100 = <strong>Endereço de Referência da Palavra</strong>
+                </pre>
+            
+                <p><strong>OBS: Lembre-se, o que se inverte é a ordem dos BYTES, não dos BITS.</strong></p>
+        </ul>
+        <hr>
+        <p><strong>Exemplo Final</strong></p>
+        <p>Como escrevemos o número 500 em uma variável <i>short int</i> no endereço 0x100 usando as duas ordens de bytes?</p>
+        <pre>
+        500 = 0000.0001.1111.0100 em binário
+        
+        <strong>*Big-Endian</strong>
+        
+            <strong>Binário</strong> = 0000.0001.1111.0100
+            <strong>Decimal</strong> = 1.244
+            <strong>Hexadecimal</strong> = 01.F4
+            
+            
+        <strong>*Little-endian</strong>
+        
+            <strong>Binário</strong> = 1111.0100.0000.0001
+            <strong>Decimal</strong> = 244.1
+            <strong>Hexadecimal</strong> = F4.01
+        </pre>
+    </body>
