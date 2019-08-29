@@ -1,0 +1,122 @@
+<html lang="pt-br">
+    <head>
+        <title>Processador MIPS</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre o processador MIPS em arquitetura de computadores.">
+    </head>
+    <body>
+        <h1>Processador MIPS - Arquitetura de Computadores</h1>
+        <p>Em um computador, a execução de suas funções típicas (como carregar e executar processos), envolvem <strong>unidades funcionais que compôem o hardware</strong>, como codificadores, decodificadores, multiplexadores e etc. Os quais, envolvem uma manipulação de baixo nível, os <strong>bits</strong>.</p>
+        <p>Estes comandos executáveis, são manipulados pela linguagem <strong><i>ASSEMBLY</i></strong>, a qual representa as intruções de <strong>linguagem de máquina</strong>, em um nível mais compreensivo.</p>
+        <p>Outra questão a ser analisada, é sobre o conceito de programa armazenado, onde programas ~soa executados sequêncialmente pelo processador.</p>
+        <h2>Processador MIPS</h2>
+            <p>Sendo um <strong>microprocessador sem estágios de bloqueio pipeline</strong>, onde foi um dos primeiros processadores de computador com <strong>conjunto de instruções reduzido</strong>. Além de serem caracterizados por um grande número de registradores.</p>
+            <p>A execução de uma instrução por um processador MIPS pode ser dividida em <strong>5 fases</strong>, sendo elas <strong>busca, decodificação, execução, acesso a memória e retorno</strong>.</p>
+            <ul>
+                <li><strong>Linguagem de máquina, ASSEMBLY e C</strong></li>
+                    <p>Entenda que essas linguagens passam por uma certa hierarquia até sua execução, partindo de <strong>linguagem de alto nível</strong>(Ling. C), para <strong>linguagem de baixo nível</strong>(ASSEMBLY) e finalmente para <strong>linguagem de máquina</strong>. Além disso, esses dados seguem um ciclo de instruções, onde ocorre:</p>
+                    <ol>
+                        <strong><li>Leitura da instrução da memória usando o PC;</li></strong>
+                        <strong><li>Leitura dos operandos do banco de registradores;</li></strong>
+                        <strong><li>Execução da operação lógica;</li></strong>
+                        <strong><li>Acesso ao operando da memória;</li></strong>
+                        <strong><li>Escrever o resultado da operação (etapa 3) no registrador de destino.</li></strong>
+                    </ol>
+                    <p><strong>OBS: PC são registradores que apontam para a próxima instrução dentro do programa.</strong></p>
+                <hr>
+                <li><strong>Instruções MIPS</strong></li>
+                    <p>Instruções são <strong>palavras de linguagem de máquina</strong>, logo, um conjunto de instruções (como um script) é chamado de <strong>ISA</strong> (Instruction Set Architeture). Por exemplo:</p>
+                    <pre>
+                    <strong>C++</strong>        |       <strong>MIPS</strong>
+                    -----------------------
+                -> a = b + c;  |   -> <strong>add</strong> a,b,c
+                -> d = a - c;  |   -> <strong>sub</strong> d,a,c
+                
+                
+        Ou, de forma mais complexa:
+                
+                
+                    <strong>C++</strong>        |       <strong>MIPS</strong>
+                        -----------------------
+          -> f = (g+h) - (i+j);|   -> <strong>add</strong> t0,g,h
+                               |   -> <strong>add</strong> t1,i,j
+                               |   -> <strong>sub</strong> f,t0,t1
+                
+                    </pre>
+                    <p>Perceba que em uma linguagem MIPS,<strong>apenas uma operação pode ser realizada por vez</strong>, sendo preciso até mesmo o uso de <strong>registradores</strong> para o armazenamento para futuras operações.</p>
+                    <p>Diante disso, o MIPS pode possuir inúmeros comandos de execução de instruções, sendo os principais:</p>
+                    <ul>
+                        <li><strong>SLL</strong></li>
+                            <p>Deslocamento de bits de acordo com a posição exigida.</p>
+                            <pre>
+                        <strong>sll</strong> $2, $5, 2
+                        
+                        onde o registrador 2 recebe o registrador 5 deslocado 2 posições pra esquerda ($5*4).
+                            </pre>
+                        <li><strong>ADD/SUB</strong></li>
+                            <p>Soma/Subtração de dois valores</p>
+                            <pre>
+                        <strong>add/sub</strong> $2, $4, $2
+                        
+                        onde o registrador 2 recebe a soma/subtração dos registradores 4 e 2.
+                            </pre>
+                        <li><strong>LW</strong></li>
+                            <p>Leitura do endereço de algum registrador.</p>
+                            <pre>
+                        <strong>lw</strong> $15, 0($2)
+                        
+                        onde será inserido no registrador 15 o endereço do registrador 2, onde o 0 é a posição do endereço (de 4 em 4).
+                            </pre>
+                    </ul>
+                <hr>
+                <li><strong>Movimentação de dados</strong></li>
+                    <p>São os comandos que executam a movimentação dos dados entre a <strong>memória/registrador</strong>, onde:</p>
+                    <ol>
+                        <strong><li>LW</li></strong>
+                            <p>Ou <strong>load</strong>, é o comando que realiza o movimento da memória para um regstrador.</p>
+                        <strong><li>SW</li></strong>
+                            <p>Ou <strong>store</strong>, é o que realiza o movimento do registrador para a memória.</p>
+                    </ol>
+                <hr>
+                <li><strong>Organização da memória</strong></li>
+                    <p>No MIPS, a memória é organizada em <strong>bytes</strong>, embora o endereçamento seja em palavras de 4 bytes (32 bits). Suponha que H seja associado com o registrador $s2 e o endereço base do array A armazenado em $s3. Qual o código MIPS para o comando <strong>A[12]=H+A[8]?</strong></p>
+                    <pre>
+                <ol><strong><li>lw  $s0,32($s3)</li></strong>
+                    <strong><li>add $t0,$s2,$s0</li></strong>
+                    <strong><li>sw  $t0,48($s3)</li></strong>
+                </ol>
+                    </pre>
+                <li><strong>Formatos de instrução</strong></li>
+                    <ul>
+                        <li><strong>Formato de instrução do tipo "R" (R-type)</strong></li>
+                            <pre>
+                        | OP | RS | RT | RD | Shamt | Funct |
+                        -------------------------------------
+                        | 6B | 5B | 5B | 5B |   5B  |   6B  | 
+                            </pre>
+                        <ol>
+                            <li>OP - Operação básica da instrução (opcode)</li>
+                            <li>RS - Primeiro registrador fonte</li>
+                            <li>RT - Segundo registrador fonte</li>
+                            <li>RD - Registrador destino</li>
+                            <li>Shamt - Shift amount, para instruções de deslocamento</li>
+                            <li>Funct - Function, seleciona variações das operações especificadas pelo opcode</li>
+                        </ol>
+                        <li><strong>Formato de instrução do tipo "I" (I-type)</strong></li>
+                            <pre>
+                        | OP | RS | RT | Endereço |
+                        -------------------------------------
+                        | 6B | 5B | 5B |    16B   | 
+                            </pre>
+                            <p>Possui instruções aritméticas e instruções load/store, onde o <strong>endereçamento</strong> é o deslocamento ao enderço base em RS.</p>
+                        <li><strong>Formato de instrução do tipo "J" (J-type)</strong></li>
+                            <pre>
+                        | OP | Endereço |
+                        -------------------------------------
+                        | 6B |    26B   | 
+                            </pre>
+                            <p>Instruções de desvio incondicional.</p>
+                    </ul>
+            </ul>
+    </body>
+<html>    
