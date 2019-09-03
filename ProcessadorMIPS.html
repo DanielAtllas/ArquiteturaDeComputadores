@@ -102,6 +102,7 @@
                             <li>Shamt - Shift amount, para instruções de deslocamento</li>
                             <li>Funct - Function, seleciona variações das operações especificadas pelo opcode</li>
                         </ol>
+                        <br>
                         <li><strong>Formato de instrução do tipo "I" (I-type)</strong></li>
                             <pre>
                         | OP | RS | RT | Endereço |
@@ -116,6 +117,37 @@
                         | 6B |    26B   | 
                             </pre>
                             <p>Instruções de desvio incondicional.</p>
+                        
+                        <p>Para a realização de um tipo de formato (R, J ou i) é preciso uma tabela para um melhor entendimento, chamada de <strong>MIPS Reference Data</strong>, a qual contêm todos os comandos e seus tipos de instrução assim como identificar o opcode/funct dos mesmos. Uma instrução <strong>add</strong> por exemplo, possui um tipo <strong>R</strong>, com opcode/funct 0/20 (hexadecimal), logo, para uma conversão hexadecimal é preciso completar as caixas da tabela do tipo com <strong>números binários e depois converte-los para hexadecimla</strong>, como no exemplo a seguir:</p>
+                        <pre>
+                        <strong>add $t0,$s1,$s2</strong>
+                        
+                            | OP |  RS |  RT |  RD | Shamt | Funct |
+                            -------------------------------------
+                            | 0  | $s1 | $s2 | $t0 |   0   |  add  |
+                            
+                        
+Logo, cada caixa irá possuir um valor binário (respeitando a quantidade de bits de cada uma), onde:
+                        
+                            <ol>
+                            <li>add   - 100000</li>
+                            <li>shamt - 00000</li>
+                            <li>$t0   - 01000</li>
+                            <li>$s2   - 10010</li>
+                            <li>$s1   - 10001</li>
+                            <li>OP    - 000000</li>
+                            </ol>
+                            00000010001100100100000000100000
+                            
+Esses bits devem ser separados em grupos de 4 para a conversão:
+                        
+                            0000|0010|0011|0010|0100|0000|0010|0000
+                             ^    ^    ^    ^    ^    ^    ^    ^   
+                             0  | 2  | 3  | 2  | 4  | 0  | 2  | 0
+                             
+                             
+                             <strong>0x02324020</strong>
+                        </pre>
                     </ul>
             </ul>
     </body>
