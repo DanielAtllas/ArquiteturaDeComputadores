@@ -149,6 +149,43 @@ Esses bits devem ser separados em grupos de 4 para a conversão:
                              <strong>0x02324020</strong>
                         </pre>
                     </ul>
+                <hr>
+                <li><strong>Fatores de desempenho da CPU</strong></li>
+                    <p>Existem aspectos que podem causar uma mudança no desempenho da CPU, como a <strong>quantidade de instrução</strong> (a qual é determinada pela ISA e compilador) e o <strong>CPI/Tempo de ciclo</strong> (determinado pelo hardware da CPU).</p>
+                <hr>
+                <li><strong>Execução de Instrução</strong></li>
+                    <p>Inúmeras instruções podem ser dadas no MIPS, sendo as mais comuns divididas em 3 subconjuntos, <strong>referência de memória</strong> (Lw,Sw), <strong>lógico/aritmético</strong> (add, sub, and, or) e <strong>transferência de controle</strong> (beq, j).</p>
+                    <p>Para todas as intruções, os dois primeiros passos são iguais, sendo: <strong><i>fetch instruction</i></strong> (PC -> memória da instrução), onde deve enviar o PC (registrador) para a memória e buscar a instrução. Além do <storng><i>Read Register</i></storng> (Número do registrador -> register file)o qual deve ler um ou dois registradores (usando o campo da instrução para selecionar os registradores a serem lidos).</p>
+                    <p>Estes processos, são construídos em um simulador, chamado de <strong>Logisim</strong>, este simulador possui duas unidades principais:</p>
+                    <ul>
+                        <li>Datapath</li>
+                            <p>Componente do processador que realiza operações aritméticas.</p>
+                        <li>Controle</li>
+                            <p>Componente do precessador que comanda o datapath, memória e dispositivos de I/O de acordo com as instruções de um programa.</p> 
+                    </ul>
+                    <p>Os passos seguintes dependem da classe, que utilizam da ULA após a leitura de um rgistrador. Após o uso da ULA, os passos são diferentes para cada classe.</p>
+                <li><strong>Construção do datapath</strong></li>
+                    <p>São necessários alguns dispositivos para a sua implementação, como:</p>
+                    <ol>
+                        <strong><li>Um lugar para armazenar as instruções do programa ---- <i>Memory Instructions</i></li></strong>
+                        <br>
+                        <strong><li>Um lugar para armazenar o endereço da instrução a ser lida na memória ---- <i>PC (registrador)</i></li></strong>
+                        <br>
+                        <strong><li>Somador para incrementar o PC para que ele aponte para a próxima instrução.</li></strong>
+                    </ol>
+                    <img src="https://1.bp.blogspot.com/-ZP6-GmOHL9w/V3xkKxVt2zI/AAAAAAAAHxc/Due9H6qh-Qw1t9u7bznn9uBMLepDUKaIQCLcB/s1600/6.gif" alt="Descrição">
+                    <ul>
+                        <li><storng>R-type instruction</storng></li>
+                            <p>Possuem estrutura de registradores, com <strong>32 bits</strong>, chamados também de <i>register files</i>, sendo um conjunto de registradores que podem ser acessados (lidos ou escritos) especificando seu número. Nele se encontram o registrador de estado da máquina.</p>
+                            <p>Costumam possuir 3 operandos de registradores (add $t1,$t2,$t3). Para ter um dado do register file, é preciso de uma entrada (número do registrador) e uma saída (o dado lido). Já para escrever um dado, são necessárias duas entradas: o número do registrador e o dado a ser escrito (sinal de controle <i>RegWrite</i>). Por fim, a ULA é controlada por um sinal de controle.</p>
+                            <br>
+                            <img src="http://cs.middlesexcc.edu/~schatz/csc264/handouts/datapath.rtype.jpg" alt="Descrição">
+                            <br>
+                            <br>
+                            <br>
+                            <p><strong>datapath para instruções do tipo R</strong></p>
+                            <img src="https://lings2mi.files.wordpress.com/2012/12/datapath-r-type.png?w=531" alt="Descrição">
+                    </ul>
             </ul>
     </body>
 <html>    
