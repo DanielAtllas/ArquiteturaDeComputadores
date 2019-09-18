@@ -1,0 +1,19 @@
+------------------------------------------------------------------------ Unidade de Controle ------------------------------------------------------------------------
+
+--> Recebe os bits do OPCODE para entender qual instrução será executada.
+
+--> O resultado dos valores obtidos, se dá pela identificação das linhas de controles usadas (Ou também chamadas de entradas de controle da
+ULA).
+
+--> Habilitação de escrita se dá pelo RegWrite, o qual só é acionado por instruções de formatos R ou instruções LW.
+
+------------------------------------------------------------------------ Controle da ULA ------------------------------------------------------------------------------------------------------------
+
+--> É divido em 2, unicade de controle e unidade de controle da ULA, o qual a primeira recebe o OPCODE e saídas de controle, gerando 2 
+linhas de saída para a unidade de controle da ULA (chamada de ALUOP) que somado ao FUNCT, é determinado qual operação será usada 
+(add/sub/and/or/SLT).
+
+--> A unidade de controle da ULA possui uma saída de 3 bits para essas operações.
+
+
+  
