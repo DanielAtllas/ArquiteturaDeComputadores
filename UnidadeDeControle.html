@@ -16,4 +16,10 @@ linhas de saída para a unidade de controle da ULA (chamada de ALUOP) que somado
 --> A unidade de controle da ULA possui uma saída de 3 bits para essas operações.
 
 
-  
+------------------------------------------------------------------------ Contrução do MIPS no LOGISIM ------------------------------------------------------------------------
+
+--> PC ----> memória de instruções ----> Banco de registradores ----> ULA ----> Memória de dados         
+                                                                  ^         |           |
+                                                                  |         |           V             
+                                                                  |          ---> Multiplexador -----------> Banco de registradores
+                                                           Multiplexador
