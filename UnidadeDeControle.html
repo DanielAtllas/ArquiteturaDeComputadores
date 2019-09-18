@@ -1,25 +1,27 @@
------------------------------------------------------------------------- Unidade de Controle ------------------------------------------------------------------------
-
---> Recebe os bits do OPCODE para entender qual instrução será executada.
-
---> O resultado dos valores obtidos, se dá pela identificação das linhas de controles usadas (Ou também chamadas de entradas de controle da
-ULA).
-
---> Habilitação de escrita se dá pelo RegWrite, o qual só é acionado por instruções de formatos R ou instruções LW.
-
------------------------------------------------------------------------- Controle da ULA ------------------------------------------------------------------------------------------------------------
-
---> É divido em 2, unicade de controle e unidade de controle da ULA, o qual a primeira recebe o OPCODE e saídas de controle, gerando 2 
-linhas de saída para a unidade de controle da ULA (chamada de ALUOP) que somado ao FUNCT, é determinado qual operação será usada 
-(add/sub/and/or/SLT).
-
---> A unidade de controle da ULA possui uma saída de 3 bits para essas operações.
-
-
------------------------------------------------------------------------- Contrução do MIPS no LOGISIM ------------------------------------------------------------------------
+<html lang="pt-br">
+    <head>
+        <title>Unidade de Controle</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre Unidade de controle em Estrutura de Dados.">
+    </head>
+    <body>
+        <h1>Unidade de Controle - Arquitetura de Computadores</h1>
+        <p>A unidade recebe os bits do <i>opcode</i> da instrução lida, ou seja, para entender qual instrução será executada. Logo, o resultado dos valores obtidos se dá pela identificação das linhas de controle usadas (ou também chamadas de <strong>entradas de controle da ULA</strong>).</p>
+        <p>Nisto, ocorre a possível habilitação de escritas dos elementos de armazenamento (memórias/registradores). Esta habilitação se dá pelo <strong><i>RegWirite</i></strong>, o qual é acionado por instruções <strong>formato R ou instruções LW</strong>.</p>
+        <h2>Controle da ULA</h2>
+        <p>É dividida em 2 unidades de controle, a <storng>unidade de controle</storng> e <storng>unidade de controle da ULA</storng>, onde a primeira recebe o opcode e as saídas de controle, gerando 2 linhas de saída para a unidade de controle da ULA (chamada de ALUOP) que somada ao <i>FUNCT</i> é determinado qual operação será usada (add/sub/and/or/SLT).</p>
+        <p><strong>OBS: A unidade de controle da ULA possui uma saída de 3 bits para essas operações.</strong></p>
+        <pre>
+        ------------------------------------------------------------------------ Contrução do MIPS no LOGISIM ------------------------------------------------------------------------
 
 --> PC ----> memória de instruções ----> Banco de registradores ----> ULA ----> Memória de dados         
                                                                   ^         |           |
                                                                   |         |           V             
                                                                   |          ---> Multiplexador -----------> Banco de registradores
                                                            Multiplexador
+
+        </pre>
+    </body>
+<html>    
+    
+
