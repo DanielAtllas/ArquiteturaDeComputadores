@@ -1,0 +1,258 @@
+<html lang="pt-br">
+    <head>
+        <title>Armazenamento</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre armazenamento em Estrutura de Dados.">
+    </head>
+    <body>
+        <pre>
+            /--------------- Struct ---------------/
+struct elemento{
+	int dado;
+	struct elemento *prox;
+};
+typedef struct elemento Elemento;
+int tam;
+/--------------- Funções - PARTE 1 ---------------/
+
+
+/--------------- Programa Principal ---------------/
+main(){
+	Elemento *lista=(Elemento *)malloc(sizeof(Elemento));
+	if(! lista){
+		printf("\n Sem memória suficiente\n");
+		exit(1);
+	}else{
+		inicia(lista);
+		int opt;
+		do{
+			opt=menu();
+			opcao(lista,opt);
+		}while(opt);
+		free(lista);
+		return 0;
+	}
+}
+/--------------- Funções - PARTE 2 ---------------/
+// inicia lista
+void inicia(Elemento *lista){
+	lista->prox=NULL;
+	tam=0;
+}
+
+// MENU
+int menu(void){
+	int opt;
+	printf("\n==== MENU ====\n");
+	printf("\n 0 - Encerrar programa.\n");
+	printf("\n 1 - Destruir lista.\n");
+	printf("\n 2 - Inserir no inicio.\n");
+	printf("\n 3 - Inserir no final.\n");
+	printf("\n 4 - Inserir na posição desejada.\n");
+	printf("\n 5 - Remover do inicio.\n");
+	printf("\n 6 - Remover do final.\n");
+	printf("\n 7 - Remover da posição desejada.\n");
+	printf("\n 8 - Exibir lista.\n");
+	printf("\n\n->Opção: ");
+	scanf("%d",&opt);
+	
+	return opt;
+}
+
+//Direcionamento da opção
+void opcao(Elemento *lista,int op){
+	switch(op){
+		case 0:
+			libera(lista);
+		break;
+		case 1:
+			libera(lista);
+			inicia(lista);
+		break;
+		case 2:
+			insereInicio(lista);
+		break;
+		case 3:
+			insereFinal(lista);
+		break;
+		case 4:
+			insere(lista);
+		break;
+		case 5:
+			removeInicio(lista);
+		break;
+		case 6:
+			removeFinal(lista);
+		break;
+		case 7:
+			remove(lista);
+		break;
+		case 8:
+			exibe(lista);
+		break;
+		default:
+			printf("\n OPÇÃO INVÁLIDA\n");
+	}
+}
+//Validação lista
+int vazia(Elemento *lista){
+	if(lista->prox==NULL){
+		return NULL;
+	}else{
+		return 0;
+	}
+}
+
+//Leitura do elemento
+Elemento *aloca(){
+	Elemento *novo=(Elemento *)malloc(sizeof(Elemento));
+	if(! novo){
+		printf("\n Sem memória disponível\n");
+		exit(1);
+	}else{
+		printf("\n Insira o valor do elemento: ");
+		scanf("%d",&novo->dado);
+		return novo;
+	}
+}
+
+//Inserir no final
+void insereFinal(Elemento *lista){
+	Elemento *novo=aloca();
+	novo->prox=NULL;
+	if(vazia(lista)){
+		lista->prox=novo;
+	}else{
+		int tmp=lista->prox;
+		while(tmp->prox != NULL){
+			tmp=tmp->prox;
+			tmp->prox=novo;
+		}
+		tam++;
+	}
+}
+
+//Inserir no inicio
+void insereInicio(Elemento *lista){
+	Elemento *novo=aloca();
+	Elemento *oldhead=lista->prox;
+	lista->prox=novo;
+	novo->prox=oldhead;
+	tam++;
+}
+
+//Exibir lista
+void exibe(Elemento *lista){
+	if(vazia(lista)){
+		printf("\n LISTA INEXISTENTE\n");
+		return;
+	}
+	Elemento *tmp;
+	tmp=lista->prox;
+	printf("\nLISTA:	");
+	while(tmp != NULL){
+		printf("%5d",tmp->dado);
+		tmp=tmp->prox;
+	}
+	printf("\n	");
+	int count;
+	printf("\nPOSIÇÃO:	");
+	for(count=0;count<tam;count++){
+		printf("%5d",count+1);
+	}
+}
+
+//libera lista
+void vazia(Elemento *lista){
+	if(! vazia(lista)){
+		Elemento *proxElemento, *atual;
+		atual=lista->prox;
+		while(atual != NULL){
+			proxElemento=atual->prox;
+			free(atual);
+			atual=proxElemento;
+		}
+	}
+}
+
+//Insere na posição desejada
+void insere(Elemento *lista){
+	int pos, count;
+	printf("\n Informe a posição que deseja: ");
+	scanf("%d",&pos);
+	if(pos>0 &&pos<=tam){
+		if(pos==1){
+			insereInicio(lista);
+		}else{
+			Elemento *atual=lista->prox, *anterior=lista;
+			Elemento *novo=aloca();
+			for(count=0;count<pos;count++){
+				anterior=atual;
+				atual=atual->prox;
+			}
+			anterior->prox=novo;
+			novo->prox=atual;
+			tam++;
+		}
+	}else{
+		printf("\n POSIÇÃO INVÁLIDA\n");
+	}
+}
+
+// Remove do inicio
+Elemento *removeInicio(Elemento *lista){
+	if(lista->prox==NULL){
+		printf("\n LISTA VAZIA\n");
+		return NULL;
+	}else{
+		Elemento *tmp=lista->prox;
+		lista->prox=tmp->prox;
+		tam--;
+		return tmp;
+	}
+}
+
+//Remove final
+Elemento *removeFinal(Elemento *lista){
+	if(lista->prox==NULL){
+		printf("\n LISTA VAZIA\n");
+		return NULL;
+	}else{
+		Elemento *ultimo=lista->prox, *penultimo=lista;
+		while(ultimo->prox != NULL){
+			penultimo=ultimo;
+			ultimo=ultimo->prox;
+		}
+		penultimo->prox=NULL;
+		tam--;
+		return ultimo;
+	}
+}
+
+//Remove da posição desejada
+Elemento *remove(Elemento *lista){
+	int opt,count;
+	printf("\n Informe a posição que deseja: ");
+	scanf("%d",&opt);
+	if(opt>0 && opt<=tam){
+		if(opt==1){
+			removeInicio(lista);
+		}else{
+			Elemento *atual=lista->prox, *anterior=lista;
+		}
+		for(count=0;count<opt;count++){
+			anterior=atual;
+			atual=atual->prox;
+		}
+		anterior->prox=atual->prox;
+		tam--;
+		return atual;
+		
+	}else{
+		printf("\n POSIÇÃO INVÁLIDA\n");
+		return NULL;
+	}
+}
+        </pre>
+    </body>
+</html>
