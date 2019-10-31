@@ -1,0 +1,399 @@
+<html lang="pt-br">
+    <head>
+        <title>Cache</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Este é um site de estudos sobre Cache em Arquitetura de Computadores.">
+    </head>
+    <body>
+        <h1>Cache - Arquitetura de Computadores</h1>
+        <p> A memória cache é um tipo de extensão da memória RAM, atribuindo a ela <strong>dados recentemente acessados</strong> na RAM, afim de diminuir o tempo de busca de dados/registros durante alguma execução, ou seja, sempre que um dado é lido na memória, ele é inserido no cahce em seguida, pois assim, se necessária a leitura do mesmo dado novamente, não será necessário ir até a memória (mais longe), pois estará na cache (mais perto).</p>
+        <p>É então, calculado quantos acessos a execução teve na memória RAM e cache, onde o primeiro acesso é realizado, por ser na memória RAM, é chamado de <strong>miss cache</strong> (acesso fora da cache). Quando é um acesso na cache, esse é chamado de <strong>hit cahce</strong> (acesso dentro da cache). Imagine por exemplo que um looping <i>for</i> fará com que incremente +1 no valor de X, logo, no primeiro acesso a X, será realizado um <strong>miss cache</strong>, pois ainda não se encontra em cache (ou seja, até que X = 1, será miss cache). Porém a partir do segundo acesso, será realizado um <strong>hit cache</strong>, pois agora o endereço de X já está alocado no cahce.</p>
+        <p>Ou seja, se for um looping de 5 repetições, ocorrerá <strong>1 miss cache</strong> (X = 1) e <strong>4 hit cahce</strong> (X = [2,3,4,5]).</p>
+        <p><strong>OBS: É viável saber que o tempo de acesso na memória cache é menor do que o tempo de acesso a RAM, gerando um conceito de localidade espacial e temporal.</strong></p>
+        <ul>
+            <li><strong>Localidade Espacial</strong></li>
+                <p>Se uma informação é acessada dentro de um programa, é possível que informações adjacentes serão acessadas em um futuro próximo, ou seja, <strong>toda instrução ou comando que sucede outro, é considerado espacial.</strong></p>
+                <pre>
+            X = 0
+            Y = 1 ---> Y é espacial por X
+            Z = 2 ---> Z é espacial por Y
+                </pre>
+            <li><strong>Localidade Temporal</strong></li>
+                <p>Se uma informação é acessada dentro de um programa, é provável que ele seja acessado novamente em um futuro próximo, ou seja, <strong>toda intrução que é acessada repetidamente, é considerada temporal</strong> (como um looping por exemplo).</p>
+                <pre>
+            <strong>while (</strong><i>X != 5)</i>
+                <i>X = X+1;</i> -----> X será acessado 5 vezes, logo é temporal.
+                </pre>
+        </ul>
+        <p>Quando o precessador faz um acesso a um registro na memória é primeiro verificado se tal dado reside em seus dados, afirmando o conceito de que todo e qualquer acesso por instrução passa primeiramente pelo cache e depois pela RAM.</p>
+        <img src="https://img.ibxk.com.br/materias/2667/7095.jpg" alt="Descrição">
+        <ul>
+            <li><strong>Tempo total de acesso (memória)</strong></li>
+                <p>Este é o cálculo de tempo que toda uma instrução leva por acessos a memória, onde se o acesso a uma instrução de busca na memória leva 50 nanosegundos (hipoteticamente), o tempo total de acesso, considerando um looping de 50 acessos, será de:</p>
+                <pre>
+            TTA.M = <i>acessos</i> x <i>tempo</i>
+            
+            TTA.M = <i>50</i> x <i>50</i>
+            
+            TTA.M = <strong>2500 nanosegundos</strong>
+                </pre>
+            <li><strong>Tempo total de acesso (cache)</strong></li>
+                <p>Se considerarmoso tempo de acesso a um dado no cache igual a 3 nanosegundos e o tempo de acesso a um dado na memória principal igual a 50 nanosegundos, considerando um looping de 50 acessos, tem-se que o tempo é:</p>
+                <pre>
+            TTA.C = (<i>Hits x tempo cache</i>) + (<i>Miss x tempo RAM</i>)
+            
+            TTA.C = (49 x 3) + (1 x 50)
+            
+            TTA.C = <strong>197 nanosegundos</strong>
+                </pre>
+            <li><strong>Tempo médio de acesso</strong></li>
+                <p>O tempo médio de acesso em uma hierarquia de memória determina o tempo de acesso por instrução em função das probabilidades de acertos e erros de acessos e dos tempos desses acessos conforme a fórmula:</p>
+                <pre>
+            TMA = (ph x th) + (ph x tm)
+            
+        onde,
+            
+            TMA = <strong>Tempo médio de acesso</strong>
+            
+            ph = <strong>Probabilidade de hit</strong>
+            
+            th = <strong>Tempo em caso de hit</strong>
+            
+            pm = <strong>Probabilidade de miss</strong>
+            
+            tm = <strong>Tempo em caso de miss</strong>
+                </pre>
+        </ul>
+        <p>Por exemplo: Um programa realiza 1000 acessos à memória durante a seua exwecução, e desses acessos, 20 são miss cahce. O tempo de acesso à cache é igual a 5 nanosegundos enquanto a memória principal é de 70 nanosegundos. Qual o tempo total de acessos e o tempo médio de acesso:</p>
+        <pre>
+            1 - TTA.M = 20 x 70 = <strong>1400 nanosegundos</strong>
+            
+        Como são 1000 acessos com 20 miss, então 980 são hit
+            
+            2 - TTA.C = (980 x 5) + (20 x 70) = 4900 + 1400 = <strong>6300 nanosegunos</strong>
+            
+            3 - TMA = (ph x th) + (ph x tm)
+            
+                TMA = <strong>Tempo médio de acesso</strong>
+            
+                ph = <strong>20/1000 = 0,02</strong>
+
+                th = <strong>5</strong>
+
+                pm = <strong>70</strong>
+
+                tm = <strong>1 - PM = 1 - 0,02 = 0,98</strong>
+                
+                TMA = (0,02 x 5) + (0,98 x 70) = 0,01 + 68,6 = <strong>68,61</strong>
+        </pre>
+        <ul>
+            <li><strong>Associatividade</strong></li>
+                <p>Uma memória principal possui uma certa quantidade de <strong>N bytes</strong> (endereços), dando a ela uma quantidade de <strong>X bits</strong> (por endereço), o qual é obtido através do cálculo de <strong>log de N (na base 2) = X</strong>, por exemplo:</p>
+                <pre>
+            <strong>2 bytes de memória</strong>
+                <i>log 2 = X
+                2^X = 2
+                X = 1</i>
+                
+                 ------------
+                |   end. 0   | -> Byte 0
+                 ------------
+                |   end. 1   | -> Byte 1
+                 ------------
+                
+                
+            <strong>16 bytes de memória</strong>
+                <i>log 16 = X
+                2^X = 16
+                X = 4</i>
+                
+                 ------------
+                | end. 0000  | -> Byte 0
+                 ------------
+                | end. 0001  | -> Byte 1
+                 ------------
+                | end. 0010  | -> Byte 2
+                 ------------
+                | end. 0011  | -> Byte 3
+                 ------------
+                | end. 0100  | -> Byte 4
+                 ------------
+                | end. 0101  | -> Byte 5
+                 ------------
+                | end. 0110  | -> Byte 6
+                 ------------
+                | end. 0111  | -> Byte 7
+                 ------------
+                .
+                .
+                .
+                 ------------
+                | end. 1111  | -> Byte 15
+                 ------------
+
+                </pre>
+                <p>Diante disso, é possível obter a <strong>quantidade de blocos</strong> da memória e a quantidade de <strong>linhas (end) por bloco</strong>. No caso de uma memória de 16 bytes, ela possui então 8 blocos com 2 endereços cada</p>
+                <pre>
+                 ------------
+                | end. 0000  | -> Byte 0
+                 ------------           ----> Bloco 1
+                | end. 0001  | -> Byte 1
+                 ------------
+                 
+                 ------------
+                | end. 0010  | -> Byte 2
+                 ------------           ----> Bloco 2
+                | end. 0011  | -> Byte 3
+                 ------------
+                .
+                .
+                .
+                 ------------
+                | end. 1110  | -> Byte 14
+                 ------------           ----> Bloco 8
+                | end. 1111  | -> Byte 15
+                 ------------
+                </pre>
+                <p>Na cache, cada bloco terá a mesma qunatidade de endereços dos blocos de memória, possuindo apenas a metade dos bits:</p>
+                <pre>
+                
+                <strong>*CACHE</strong>
+                 ----------- -----------
+            00  |  end. A1  |  end. A2  | ---> Bloco 1
+                 ----------- -----------
+            01  |  end. B1  |  end. B2  | ---> Bloco 2
+                 ----------- -----------
+            10  |  end. C1  |  end. C2  | ---> Bloco 3
+                 ----------- -----------
+            11  |  end. D1  |  end. D2  | ---> Bloco 4
+                 ----------- -----------
+            |
+            V
+         <strong>Linhas</strong>    
+              </pre>
+              <p>Como cada bloco têm 2 endereços, então o bit menos significativo do endereço indica a posição dentro do bloco, chamado de <strong>campo w</strong>, por exemplo:</p>
+              <pre>
+                000|0| -> Campo W
+                
+                000|1| -> campo w
+              </pre>
+              <p>Os três outros bits que sobram em cada endereço, identificam o bloco na memória principal, por exemplo:</p>
+              <pre>
+                |000|0 -> Bloco 000
+                 
+                |001|0 -> Bloco 001
+                
+                |000|1 -> Bloco 000
+                 |   |
+                 |   V
+                 |  End. no bloco (como um índice) ou campo w
+                 |
+                 V
+                ID Bloco 
+                
+              </pre>
+              <p>Para identificar o dado a ser colocado na cahce,  é lido o bloco e seu índice dentro do bloco que residem na memória, por exemplo:</p>
+                <pre>
+            O dado com o endereço <strong>0011</strong> se encontra nos:
+            
+              Bloco: 001
+            
+              índice:  1
+                </pre>
+            <li><strong>Inserção de dado da RAM para a Cache</strong></li>
+                <p>Na execução de um comando, alguns passos são definidos:</p>
+                <p><strong>e2 = e2 + a1</strong></p>
+                <ol>
+                    <li>Ler e2</li>
+                    <li>Ler a1</li>
+                    <li>Somar e2 e a1</li>
+                    <li>Atribuir resultado em e2</li>
+                </ol>
+                <p>Diante disso, o armazenamento da memória para a cache pode ser feita de 3 tipos, sendo eles:</p>
+                <ul>
+                    <li><strong>Completamente Associativo</strong></li>
+                        <p>Este método tem como característica a capacidade de inserir dados da memória no cache em <strong>qualquer uma das linhas</strong>, independete do dado ou de seu bloco.</p>
+                        <ol>
+                            <br>
+                            <strong><li>Ler o endereço de e2</li></strong>
+                                <p>Como o primeiro passo não está em cache, o passo é <strong>miss</strong>, precisando ser localizado na memória principal.</p>
+                                <pre>
+                <strong>*Memória</strong>
+                     ------------
+                    | end. 0000  | (a1)
+                     ------------        ----> Bloco A
+                    | end. 0001  | (a2)
+                     ------------
+                     .
+                     .
+                     .
+                     ------------
+                    | end. 0100  | (c1)
+                     ------------       ----> Bloco C
+                    | end. 0101  | (c2)
+                     ------------
+                     .
+                     .
+                     .
+                     ------------
+                    | end. 1000  | (e1)
+                     ------------       ----> Bloco E
+                    | end. 1001  | (e2)
+                     ------------
+                     
+                     
+                    <strong>e2 = 1001 (bloco E)</strong>
+                                
+                Todos os dados que lidos na memória, são posteriormente, armazenados em cache:
+                
+                <strong>*Cache</strong>
+                    --- ---     ---------              ------ ------
+                   | 0 | 1 |   |   100   |         00 |  e1  |  e2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         01 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         10 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         11 |      |      |
+                    --- ---     ---------              ------ ------
+                    |    |          |               |       |
+                    |    |          v               |       |
+                    |    V        Bloco             |       V
+                    | ID de NULL                    |     Dados 
+                    |                               V
+                    V                             Linha
+                ID de mudança    
+                    
+                    
+                Ou seja, o <strong>bloco E (100)</strong> é armazenado com todos os seus dados na <strong>linha 00</strong>, completando o passo 1    
+                                </pre>
+                            <strong><li>Ler o endereço de a1</li></strong>
+                                <p>O procedimeno é extremamente o mesmo, como é a primeira leitura para "a1", ele não se encontra na cache, gerando um <strong>miss</strong>, precisando buscar na memória e alocar na cache:</p>
+                                <pre>
+                <strong>a1 = 0000 (bloco A)</strong>
+                
+                <strong>*Cache</strong>
+                    --- ---     ---------              ------ ------
+                   | 0 | 1 |   |   100   |         00 |  e1  |  e2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 1 |   |   000   |         01 |  a1  |  a2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         10 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         11 |      |      |
+                    --- ---     ---------              ------ ------
+                    
+                Armazenando o <strong>Bloco A (000)</strong>   e todos os seus dados na <strong>linha 01</strong>    
+                                </pre>
+                            <strong><li>Somar e2 e a1</li></strong>
+                                <p>Como o procedimento lê elementos que já se encontram na cache, este é um <strong>hit</strong>, não realizando nada mais na cache (soma não é realizada pela cache).</p>
+                            <strong><li>Atribuir resultado da soma em e2</li></strong>
+                                <p>Como este procedimento aloca o valor da soma em e2 e e2 já se encontra em cache, é um <strong>hit</strong>. Porém, já possui um valor e precisa ser alterado</p>
+                                <pre>
+                    <strong>*Cache</strong>
+                    --- ---     ---------              ------ ------
+                   | 1 | 1 |   |   100   |         00 |  e1  |  e2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 1 |   |   000   |         01 |  a1  |  a2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         10 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         11 |      |      |
+                    --- ---     ---------              ------ ------
+                    |
+                    V
+                ID de modificação alterado
+                                </pre>
+                        </ol>
+                    <li><strong>Mapeamento Direto</strong></li>
+                        <p>Os procedimentos são semelhantes, porém, com o método de mapeamento direto, cada bloco será armazenado em uma <strong>linha específica</strong>. A identificação para qual linha cada bloco vai, é dada pelos <strong>número centrais do endereço</strong>, por exemplo:</p>
+                        <pre>
+                    <strong>e2 = 1|00|1</strong>
+                    
+                    Logo, este endereço é dos:
+                    
+                    Bloco: 100
+                    
+                    Linha: 00
+                    
+                    índice: 1
+                        </pre>
+                        <ol>
+                            <strong><li>Leitura de e2</li></strong>
+                                <p>O processo é exatamente o mesmo do anterior, como se encontra em memória, é realizado um <strong>miss</strong> e depois inserido na cache:</p>
+                                <pre>
+                    <strong>*Cache</strong>
+                    --- ---     ---------              ------ ------
+                   | 0 | 1 |   |    1    |         00 |  e1  |  e2  |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         01 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         10 |      |      |
+                    --- ---     ---------              ------ ------
+                   | 0 | 0 |   |         |         11 |      |      |
+                    --- ---     ---------              ------ ------
+                    
+                    Perceba que no método anterior 3 bits eram alocados para identificação do bloco, mas agora como 2 deles são para identificar
+                    a linha de alocação, apenas 1 foi armazenado para o bloco
+                                </pre>
+                            <strong><li>Leitura de a1</li></strong>
+                                <p>É neste passo que a principal diferença é mostrada, pois deverá sacontecer uma <strong>sobreposição</strong></p>
+                                <pre>
+                    <strong>a1 = 0000</strong>
+                    
+                    Perceba que a ID de linha é igual a de e2, que já está alocado na linha 00 do cache
+                    
+                        <strong>*Cache</strong>
+                        --- ---     ---------              ------ ------
+                       | 0 | 1 |   |    1    |         00 |  e1  |  e2  |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         01 |      |      |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         10 |      |      |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         11 |      |      |
+                        --- ---     ---------              ------ ------
+                    
+                    Então, a localização de a1 deverá ser armazenada no lugar de e2, ou seja, susbtituir a posição de e1
+                    
+                        <strong>*Cache</strong>
+                        --- ---     ---------              ------ ------
+                       | 0 | 1 |   |    0    |         00 |  a1  |  a2  |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         01 |      |      |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         10 |      |      |
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         11 |      |      |
+                        --- ---     ---------              ------ ------
+                                </pre>
+                            <p>Os demais passos são iguais aos do procedimento anterior.</p>
+                        </ol>
+                    <li><strong>Associativo por Conjunto</strong></li>
+                        <p>Este procedimento irá <strong>separar as linhas do cache em blocos</strong> de 0 até n-1, com 2 linhas cada:</p>
+                        <pre>
+                        <strong>*Cache</strong>
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         00 |      |      |
+                        --- ---     ---------              ------ ------        ----> Conjunto 0
+                       | 0 | 0 |   |         |         01 |      |      |
+                        --- ---     ---------              ------ ------
+                        
+                        --- ---     ---------              ------ ------
+                       | 0 | 0 |   |         |         10 |      |      |
+                        --- ---     ---------              ------ ------        -----> Conjunto 1
+                       | 0 | 0 |   |         |         11 |      |      |
+                        --- ---     ---------              ------ ------
+                        
+                    Para identificar em qual conjunto o dado será armazenado no cache, basta ver o <strong>bit após o menos significativo</strong>, por exemplo:
+                    
+                    
+                        <strong>10|1|1</strong> -> Bit menos significativo
+                                   |
+                                   V
+                                Conjunto
+                        </pre>
+                </ul>
+        </ul>
+    </body>
+</html>
